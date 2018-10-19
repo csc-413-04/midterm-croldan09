@@ -1,6 +1,11 @@
 package midterm2018;
+import java.util.*;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-public class Main {
+public class Main{
+    static Map<String, String> parameters = new HashMap<>();
 
     public static void main(String[] args) {
         String question1and2 = "GET /add?a=3&b=4 HTTP/1.1\n"
@@ -26,14 +31,41 @@ public class Main {
 
         // print each answer at the end
 
+
+        String[] temp = question1and2.split("\n");
+        String endPoint;
+
+        for(int i =0 ; i <temp.length-1; i++){
+            if (temp[i].indexOf("?") == -1) {
+            }
+            else
+            {
+                    int endpointIndex = temp[i].indexOf("?");
+                    endPoint = temp[i].substring(endpointIndex+1, temp[i].lastIndexOf(" ")); // string endpoint  "a=3&a=4
+                    System.out.println(endPoint);
+                    String parametersStr = temp[i].substring(endpointIndex + 1);
+                    String[] parametersArr = endPoint.split("&");
+                    //for (String parameter : parametersArr) {
+                        String[] pari = endPoint.split("=");
+                        String key = pari[0];
+                        String value = pari[1];
+                        parameters.put(key, value);
+                        System.out.println(key);
+                        System.out.println(value);
+                    }
+                }
+
         // Question 1
         // Return the Host
+        System.out.println(temp[1]);
 
         // Question 2
         // return sum of a and b
 
         // Question 3
         // convert to java object, increment num, convert back to json and return
+        Gson gson = new Gson();
+        gson.toJson(question3);
 
         // Question 4
         // return unique words
@@ -41,4 +73,5 @@ public class Main {
         // Question 5
         // return 2nd most common word
     }
+
 }
